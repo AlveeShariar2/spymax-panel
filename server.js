@@ -33,6 +33,11 @@ app.get('/dashboard', (req, res) => {
   res.render('dashboard');
 });
 
+// ✅ GPS Route যুক্ত করা হলো
+app.get('/gps', (req, res) => {
+  res.render('gps', { latitude: null, longitude: null });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
