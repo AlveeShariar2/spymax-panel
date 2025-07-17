@@ -1,27 +1,38 @@
 const express = require('express');
+const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-const cors = require('cors');
-const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Set view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Static files
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Routes
-const panelRoutes = require('./routes/panel');
-app.use('/', panelRoutes);
+app.get('/', (req, res) => {
+  res.redirect('/login');
+});
 
-// Start server
-const PORT = process.env.PORT || 3000;
+app.get('/login', (req, res) => {
+  res.render('login', { error: null });
+});
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  // Simple dummy authentication
+  if (username === 'admin' && password === '123456') {
+    res.redirect('/dashboard');
+  } else {
+    res.render('login', { error: 'Invalid username or password' });
+  }
+});
+
+app.get('/dashboard', (req, res) => {
+  res.render('dashboard');
+});
+
 app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
