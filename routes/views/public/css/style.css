@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+}
+
+.sidebar {
+  width: 200px;
+  height: 100vh;
+  background-color: #222;
+  color: #fff;
+  float: left;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.main-content {
+  margin-left: 200px;
+  padding: 20px;
+}
